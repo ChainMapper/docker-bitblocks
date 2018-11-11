@@ -5,14 +5,13 @@ ENV GIT_COIN_NAME   bitblocks
 
 RUN	git clone $GIT_COIN_URL $GIT_COIN_NAME \
 	&& cd $GIT_COIN_NAME \
+	&& git checkout tags/1.0 \
+	&& chmod +x autogen.sh \
 	&& chmod +x share/genbuild.sh \
 	&& chmod +x src/leveldb/build_detect_platform \
-	&& cd src \
-	&& mkdir obj/support \
-	&& mkdir obj/crypto \
-	&& make -f makefile.unix "USE_UPNP=-" \
-	&& cp Bitblocksd /usr/local/bin \
-	&& cd / && rm -rf /$GIT_COIN_NAME
+	&& ./autogen.sh && ./configure \
+	&& make \
+	&& make install
 
 FROM chainmapper/walletbase-xenial as runtime
 
@@ -27,4 +26,4 @@ EXPOSE 6666
 COPY start.sh /start.sh
 COPY gen_config.sh /gen_config.sh
 RUN chmod 777 /*.sh
-CMD /start.sh bitblocks.conf ZCN Bitblocksd
+CMD /start.sh bitblocks.conf BBK bitblocksd
