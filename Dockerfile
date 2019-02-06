@@ -5,7 +5,7 @@ ENV GIT_COIN_NAME   bitblocks
 
 RUN	git clone $GIT_COIN_URL $GIT_COIN_NAME \
 	&& cd $GIT_COIN_NAME \
-	&& git checkout tags/1.0.2 \
+	&& git checkout tags/1.1.0 \
 	&& chmod +x autogen.sh \
 	&& chmod +x share/genbuild.sh \
 	&& chmod +x src/leveldb/build_detect_platform \
@@ -20,8 +20,8 @@ COPY --from=builder /usr/local/bin /usr/local/bin
 RUN mkdir /data
 ENV HOME /data
 
-#rpc port
-EXPOSE 6666
+#zmq port, rpc port & main port
+EXPOSE 5555 6666 58697
 
 COPY start.sh /start.sh
 COPY gen_config.sh /gen_config.sh
