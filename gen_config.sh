@@ -17,4 +17,5 @@ addnode=s7.bitblocksproject.com
 addnode=s8.bitblocksproject.com
 addnode=s9.bitblocksproject.com
 addnode=s10.bitblocksproject.com
+zmqpubhashblock=tcp://*:5555
 EOF
